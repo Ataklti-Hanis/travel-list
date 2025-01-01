@@ -12,7 +12,7 @@ export default function App() {
       <Logo />
       <Form />
       <PackingList />
-      <Stats />
+      <Stat />
     </div>
   );
 }
@@ -20,26 +20,16 @@ export default function App() {
 function Logo() {
   return <h1>🌴 Far Away 💼</h1>;
 }
-
 function Form() {
   const [description, setDescription] = useState("");
-  const [quantity, setQuantity] = useState(1);
-
+  const [quantity, setQuantity] = useState(5);
   function handleSubmit(e) {
     e.preventDefault();
-    if (!description) return;
-    const newItem = { description, quantity, packed: false, id: Date.now() };
-    console.log(newItem);
-    setDescription("");
-    setQuantity(1);
   }
   return (
     <div className="add-form" onSubmit={handleSubmit}>
       <h3>What do you need for your 😍 trip?</h3>
-      <select
-        value={quantity}
-        onChange={(e) => setQuantity(Number(e.target.value))}
-      >
+      <select value={quantity} onChange={(e) => setQuantity(e.target.value)}>
         {Array.from({ length: 20 }, (_, i) => i + 1).map((num) => (
           <option num={num} key={num}>
             {num}
@@ -48,7 +38,7 @@ function Form() {
       </select>
       <input
         type="text"
-        placeholder="Item.."
+        placeholder="Item..."
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
@@ -56,7 +46,6 @@ function Form() {
     </div>
   );
 }
-
 function PackingList() {
   return (
     <div className="list">
@@ -68,21 +57,19 @@ function PackingList() {
     </div>
   );
 }
-
 function Item({ item }) {
   return (
     <li>
       <span style={item.packed ? { textDecoration: "line-through" } : {}}>
         {item.quantity} {item.description}
       </span>
-      <button>❌</button>
     </li>
   );
 }
-function Stats() {
+function Stat() {
   return (
     <footer className="stats">
-      <em>👜 You have X items list, and you already packed X(x%)</em>
+      <em>👜 You have X items on your list, and you already packed X(x%)</em>
     </footer>
   );
 }
