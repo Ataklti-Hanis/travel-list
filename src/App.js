@@ -18,8 +18,12 @@ function Logo() {
   return <h1>🌳 Far Away 💼</h1>;
 }
 function Form() {
+  const [description, setDescription] = useState("");
+  function handleSubmit(e) {
+    e.prevenetDefault();
+  }
   return (
-    <div className="add-form">
+    <div className="add-form" onSubmit={handleSubmit}>
       <h3>What do you need for your 😍 trip?</h3>
       <select>
         {Array.from({ length: 20 }, (_, i) => i + 1).map((num) => (
@@ -28,7 +32,12 @@ function Form() {
           </option>
         ))}
       </select>
-      <input type="text" placeholder="Item..." />
+      <input
+        type="text"
+        placeholder="Item..."
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
       <button>Add</button>
     </div>
   );
