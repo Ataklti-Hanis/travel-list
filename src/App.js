@@ -1,30 +1,35 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 const initialItems = [
   { id: 1, description: "Passports", quantity: 2, packed: false },
   { id: 2, description: "Socks", quantity: 12, packed: true },
-  { id: 3, description: "charger", quantity: 5, packed: false },
+  { id: 3, description: "Charger", quantity: 10, packed: false },
 ];
 export default function App() {
   return (
     <div className="app">
       <Logo />
       <Form />
-      <PackingList />
+      <PakckingList />
       <Stats />
     </div>
   );
 }
 function Logo() {
-  return <h1>🌳 Far Away 💼</h1>;
+  return <h1>🌴 Far Away 💼</h1>;
 }
 function Form() {
   const [description, setDescription] = useState("");
-  const [quantity, setQuantity] = useState(5);
+  const [quantity, setQuantity] = useState(1);
   function handleSubmit(e) {
-    e.prevenetDefault();
+    e.preventDefault();
+    if (!description) return;
+    const newItem = { description, quantity, packed: false, id: Date.now() };
+    setDescription("");
+    setQuantity(1);
+    console.log(newItem);
   }
   return (
-    <div className="add-form" onSubmit={handleSubmit}>
+    <form className="add-form" onSubmit={handleSubmit}>
       <h3>What do you need for your 😍 trip?</h3>
       <select
         value={quantity}
@@ -38,18 +43,15 @@ function Form() {
       </select>
       <input
         type="text"
-        placeholder="Item..."
+        placeholder="item..."
         value={description}
-        onChange={(e) => {
-          console.log(e.target);
-          setDescription(e.target.value);
-        }}
+        onChange={(e) => setDescription(e.target.value)}
       />
       <button>Add</button>
-    </div>
+    </form>
   );
 }
-function PackingList() {
+function PakckingList() {
   return (
     <div className="list">
       <ul>
@@ -64,16 +66,16 @@ function Item({ item }) {
   return (
     <li>
       <span style={item.packed ? { textDecoration: "line-through" } : {}}>
-        {item.quantity}
-        {item.description}
+        {item.quantity} {item.description}
       </span>
+      <button>❌</button>
     </li>
   );
 }
 function Stats() {
   return (
     <footer className="stats">
-      <em>👜 You have X items on you list, you already packed X(x%)</em>
+      <em>👜 You have X items on your list, you already packed X(X%)</em>
     </footer>
   );
 }
